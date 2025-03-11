@@ -7,128 +7,263 @@
 
 /* Base styles */
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #1a1a1a;
-    color: #f2f2f2;
+    font-family: 'Courier New', monospace;
+    background-color: #000;
+    color: #ffffff;
     line-height: 1.6;
+    position: relative;
+    overflow-x: hidden; /* Prevent horizontal scroll from effects */
 }
 
-/* Header and Navigation */
+/* Enhanced Matrix rain effect - denser and grittier */
+.matrix-rain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none; /* Ensure it doesn’t interfere with clicks */
+}
+
+.matrix-rain span {
+    position: absolute;
+    bottom: 100%;
+    left: calc(3% * var(--i)); /* Closer spacing for denser effect */
+    font-size: 1rem;
+    color: #00ff00;
+    opacity: 0.4;
+    animation: fall calc(8s + 0.3s * var(--i)) linear infinite;
+    animation-delay: calc(0.2s * var(--i));
+    text-shadow: 0 0 5px #00ff00; /* Glow effect for Matrix vibe */
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-100vh);
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0.2;
+    }
+}
+
+/* Header and Navigation - CLI command prompt style */
 header {
-    background-color: #333;
-    padding: 1rem;
+    background-color: #111;
+    padding: 0.5rem;
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
+    font-family: 'Courier New', monospace;
+    border-bottom: 1px solid #00ff00;
+    box-shadow: 0 0 10px #00ff00; /* Subtle terminal glow */
 }
 
-nav ul {
-    list-style: none;
+nav {
     display: flex;
-    justify-content: center;
-    gap: 1.5rem;
+    align-items: center;
 }
 
-nav ul li a {
+nav .prompt {
+    color: #00ff00;
+    margin-right: 1rem;
+    animation: blink 1s step-end infinite; /* Blinking prompt */
+}
+
+nav a {
     color: #00ff00;
     text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s;
+    margin-right: 1rem;
+    position: relative;
 }
 
-nav ul li a:hover {
-    color: #00cc00;
+nav a:hover {
+    text-decoration: none;
+    animation: glitch 0.3s linear infinite; /* Glitch effect on hover */
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
 }
 
 /* Main content */
 main {
-    padding-top: 5rem; /* Space for fixed header */
+    padding-top: 5rem;
+    animation: fadeIn 1s ease-in;
 }
 
-/* Hero section */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Hero section - Full-screen CLI boot sequence vibe */
 .hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    padding: 4rem 2rem;
-    background-color: #222;
-    border-bottom: 2px solid #00ff00;
+    position: relative;
+    background: linear-gradient(180deg, #000000, #001100); /* Subtle gradient */
+    text-shadow: 0 0 8px #00ff00; /* Stronger glow */
+}
+
+.hero h1, .hero h2 {
+    color: #00ff00;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 4px solid #00ff00; /* Thicker cursor */
+    animation: typing 3s steps(30, end) forwards, blink-caret 0.75s step-end infinite;
 }
 
 .hero h1 {
-    font-size: 3.5rem;
-    margin-bottom: 0.5rem;
+    font-size: 3rem;
+    animation-delay: 0s;
 }
 
 .hero h2 {
-    font-size: 1.8rem;
-    color: #00ff00;
-    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    animation-delay: 3s; /* Staggered typing */
 }
 
 .hero p {
-    font-size: 1.2rem;
+    color: #ffffff;
+    margin-top: 1rem;
+    opacity: 0;
+    animation: fadeInText 1s ease-in 6s forwards; /* Delayed appearance */
 }
 
-/* General sections */
-.intro, .about, .projects, .certificates, .contact {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
 }
 
-h1, h2 {
-    color: #00ff00;
-    margin-bottom: 1rem;
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: #00ff00; }
 }
 
-.about img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin: 1rem 0;
+@keyframes fadeInText {
+    to { opacity: 1; }
+}
+
+/* Terminal window - Enhanced with scanlines and grit */
+.terminal-window {
+    background-color: rgba(0, 0, 0, 0.9);
     border: 2px solid #00ff00;
-}
-
-.about ul, .projects .project, .certificates .certificate {
-    margin-bottom: 2rem;
-}
-
-.about ul li, .project, .certificate {
-    background-color: #2a2a2a;
+    margin: 2rem auto;
+    max-width: 900px;
     padding: 1rem;
-    border-radius: 5px;
-    border: 1px solid #00ff00;
+    position: relative;
+    box-shadow: inset 0 0 10px #00ff00; /* Inner glow */
 }
 
+.terminal-window::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 255, 0, 0.05),
+        rgba(0, 255, 0, 0.05) 1px,
+        transparent 1px,
+        transparent 2px
+    ); /* Scanline effect */
+    pointer-events: none;
+}
+
+.title-bar {
+    background-color: #00ff00;
+    color: #000;
+    padding: 0.3rem;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #000;
+}
+
+.terminal-content {
+    padding: 1rem;
+    position: relative;
+}
+
+.terminal-content h2 {
+    color: #00ff00;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    animation: glitch 2s linear infinite; /* Subtle glitch on headings */
+}
+
+.terminal-content p, .terminal-content ul {
+    color: #ffffff;
+    text-shadow: 0 0 3px #00ff00; /* Faint glow */
+}
+
+/* Links */
 a {
     color: #00ff00;
     text-decoration: none;
+    transition: all 0.2s;
 }
 
 a:hover {
-    text-decoration: underline;
-    color: #00cc00;
+    text-shadow: 0 0 5px #00ff00;
+    animation: glitch 0.3s linear infinite;
 }
 
 /* Footer */
 footer {
     text-align: center;
     padding: 1rem;
-    background-color: #333;
+    background-color: #111;
+    color: #00ff00;
     margin-top: 2rem;
+    border-top: 1px solid #00ff00;
+    box-shadow: 0 0 10px #00ff00;
 }
 
 /* Responsive design */
 @media (max-width: 600px) {
     .hero h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
     .hero h2 {
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
-    nav ul {
+    nav {
         flex-direction: column;
-        align-items: center;
-        gap: 0.5rem;
+        text-align: center;
+    }
+    nav .prompt {
+        margin-bottom: 0.5rem;
+    }
+    nav a {
+        display: block;
+        margin: 0.5rem 0;
+    }
+    .terminal-window {
+        margin: 1rem;
     }
 }
