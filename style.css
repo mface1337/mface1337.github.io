@@ -1,0 +1,134 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Base styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #1a1a1a;
+    color: #f2f2f2;
+    line-height: 1.6;
+}
+
+/* Header and Navigation */
+header {
+    background-color: #333;
+    padding: 1rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+nav ul li a {
+    color: #00ff00;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #00cc00;
+}
+
+/* Main content */
+main {
+    padding-top: 5rem; /* Space for fixed header */
+}
+
+/* Hero section */
+.hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: #222;
+    border-bottom: 2px solid #00ff00;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.hero h2 {
+    font-size: 1.8rem;
+    color: #00ff00;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+}
+
+/* General sections */
+.intro, .about, .projects, .certificates, .contact {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+h1, h2 {
+    color: #00ff00;
+    margin-bottom: 1rem;
+}
+
+.about img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 1rem 0;
+    border: 2px solid #00ff00;
+}
+
+.about ul, .projects .project, .certificates .certificate {
+    margin-bottom: 2rem;
+}
+
+.about ul li, .project, .certificate {
+    background-color: #2a2a2a;
+    padding: 1rem;
+    border-radius: 5px;
+    border: 1px solid #00ff00;
+}
+
+a {
+    color: #00ff00;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #00cc00;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #333;
+    margin-top: 2rem;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    .hero h2 {
+        font-size: 1.2rem;
+    }
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+}
