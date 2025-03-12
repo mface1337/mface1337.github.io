@@ -268,3 +268,46 @@ footer {
         margin: 1rem;
     }
 }
+
+/* Ensure images stay responsive */
+.cert-images img {
+    width: 150px;
+    height: auto;
+    margin: 10px;
+    border: 1px solid #00ff00;
+    box-shadow: 0 0 5px #00ff00;
+    max-width: 100%; /* Prevents overflow */
+}
+
+/* Improve text readability */
+.terminal-content p, .terminal-content ul {
+    line-height: 1.8;
+    padding: 0 0.5rem;
+}
+
+/* Tighter mobile breakpoint */
+@media (max-width: 400px) {
+    .terminal-window {
+        max-width: 100%;
+        margin: 1rem 0.5rem;
+        padding: 0.5rem;
+    }
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+    .hero h2 {
+        font-size: 0.9rem;
+    }
+    .cert-images img {
+        width: 80px;
+        margin: 5px;
+    }
+    footer {
+        padding: 0.5rem;
+        margin-top: 1rem;
+    }
+    .matrix-rain span {
+        font-size: 0.8rem;
+        animation: fall calc(6s + 0.2s * var(--i)) linear infinite;
+    }
+}
