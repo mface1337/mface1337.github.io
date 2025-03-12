@@ -215,25 +215,56 @@ ul li::before {
     color: #00ff00;
 }
 
-/* Education container styling */
-.education-container {
-    margin: 20px auto;
-    max-width: 800px;
+/* Profile photo */
+.profile-photo {
+    display: block;
+    margin: 1rem auto;
+    border: 2px solid #00ff00;
+    box-shadow: 0 0 10px #00ff00;
 }
 
-.cert-images {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    padding: 10px;
+/* Links */
+a {
+    color: #00ff00;
+    text-decoration: none;
 }
 
-.cert-images img {
-    width: 150px; /* Small, uniform size */
-    height: auto;
-    margin: 10px; /* Uniform spacing */
-    border: 1px solid #00ff00; /* Green border for theme */
-    box-shadow: 0 0 5px #00ff00; /* Match the glowing aesthetic */
+a:hover {
+    text-shadow: 0 0 5px #00ff00;
+    animation: glitch 0.3s linear infinite;
 }
 
-/* Profile
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #111;
+    color: #00ff00;
+    margin-top: 2rem;
+    border-top: 1px solid #00ff00;
+    box-shadow: 0 0 10px #00ff00;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    .hero h2 {
+        font-size: 1rem;
+    }
+    nav {
+        flex-direction: column;
+        text-align: center;
+    }
+    nav .prompt {
+        margin-bottom: 0.5rem;
+    }
+    nav a {
+        display: block;
+        margin: 0.5rem 0;
+    }
+    .terminal-window {
+        margin: 1rem;
+    }
+}
