@@ -161,7 +161,46 @@ main {
 /* Terminal Content */
 .terminal-content {
     padding: 1rem;
-    text-align: center; /* Centers all text and inline content */
+    text-align: center;
+}
+/* Education Container */
+.education-container {
+    margin: 0 auto;
+    max-width: 800px;
+}
+/* Cert Images */
+.cert-images {
+    display: flex;
+    justify-content: center; /* Ensures centering */
+    align-items: center; /* Vertically aligns items */
+    flex-wrap: wrap; /* Allows wrapping on small screens */
+    padding: 1rem 0;
+    width: 100%; /* Ensures full width of container */
+}
+.cert-images img {
+    width: 250px; /* Fixed small size */
+    height: auto;
+    margin: 0.5rem; /* Consistent spacing */
+    border: 1px solid #00ff00;
+    box-shadow: 0 0 5px #00ff00;
+    cursor: pointer; /* Indicate clickability */
+    transition: transform 0.3s ease; /* Smooth expansion */
+    object-fit: cover; /* Ensures proper scaling */
+}
+.cert-images img.expanded {
+    width: 100%; /* Full size when clicked */
+    max-width: 800px; /* Cap expansion */
+    z-index: 1000; /* Bring to front */
+    transform: scale(1.2); /* Slight zoom */
+    position: fixed; /* Overlay effect */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center in viewport */
+}
+.cert-images div { /* For Credly iframe */
+    margin: 0 auto;
+    display: block;
+    text-align: center; /* Center the iframe */
 }
 
 /* Section Styling */
@@ -238,6 +277,15 @@ main {
     .cert-images img.expanded {
         width: 100%;
         max-width: 300px;
+    }
+}
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+    .cert-images img {
+        width: 150px; /* Smaller for mobile */
+    }
+    .cert-images img.expanded {
+        max-width: 300px; /* Smaller cap on mobile */
     }
 }
 
