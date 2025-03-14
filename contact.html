@@ -51,14 +51,20 @@
             </div>
         </div>
         <div class="terminal-window">
-            <div class="title-bar">Send a Message</div>
-            <div class="terminal-content">
-                <p>$ kali@terminal:~$ <span class="prompt">type message &gt;</span></p>
-                <form id="contact-form" class="terminal-form" onsubmit="sendEmail(event)">
-                    <input type="text" id="name" name="name" placeholder="Your Name" required>
-                    <input type="email" id="email" name="email" placeholder="Your Email" required>
-                    <textarea id="message" name="message" placeholder="Your Message" rows="4" required></textarea>
-                    <button type="submit">Send</button>
+            <div class="title-bar">Kali Terminal - Send Encrypted Message</div>
+            <div class="terminal-content kali-terminal">
+                <div class="terminal-buffer" id="terminal-buffer">
+                    <p>kali@kali:~$ <span class="command">Initializing secure channel...</span></p>
+                    <p>kali@kali:~$ <span class="command">Authentication: SUCCESS</span></p>
+                    <p>kali@kali:~$ <span class="prompt">send_msg --help</span></p>
+                    <p class="help-text">Usage: send_msg [options]<br>-n [name] : Sender's alias<br>-t [email] : Target email (e.g., mecktech@gmail.com)<br>-m [message] : Encrypted payload<br>-s : Submit payload</p>
+                    <p>kali@kali:~$ <span class="prompt" id="terminal-prompt">send_msg -n -t -m -s ></span><span class="blink-cursor">█</span></p>
+                </div>
+                <form id="contact-form" class="terminal-form" action="https://formspree.io/f/myourid" method="POST">
+                    <input type="text" id="name" name="name" placeholder="Enter alias (-n)" required aria-label="Sender's alias">
+                    <input type="email" id="email" name="email" placeholder="Enter target email (-t)" value="mecktech@gmail.com" required aria-label="Target email">
+                    <textarea id="message" name="message" placeholder="Enter encrypted payload (-m)" rows="4" required aria-label="Encrypted message"></textarea>
+                    <button type="submit" id="submit-btn">Execute (-s)</button>
                 </form>
                 <p id="form-status" class="status-message"></p>
             </div>
@@ -68,26 +74,61 @@
         <p>© 2023 Chris Meck. All rights reserved.</p>
     </footer>
     <script>
-        function sendEmail(event) {
+        // Replace 'myourid' with your actual Formspree endpoint
+        const form = document.getElementById('contact-form');
+        const status = document.getElementById('form-status');
+        const submitBtn = document.getElementById('submit-btn');
+        const terminalBuffer = document.getElementById('terminal-buffer');
+
+        form.addEventListener('submit', function(event) {
             event.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            const status = document.getElementById('form-status');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing [|]';
+            status.textContent = '';
+            let spin = 0;
+            const spinInterval = setInterval(() => {
+                spin = (spin + 1) % 4;
+                submitBtn.textContent = `Processing [${' -\\|/'[spin]}]`;
+            }, 200);
 
-            const subject = encodeURIComponent(`Message from ${name}`);
-            const body = encodeURIComponent(`From: ${email}\n\n${message}`);
-            const mailtoLink = `mailto:mecktech@gmail.com?subject=${subject}&body=${body}`;
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    clearInterval(spinInterval);
+                    submitBtn.textContent = 'Execute (-s)';
+                    submitBtn.disabled = false;
+                    terminalBuffer.innerHTML += `<p>kali@kali:~$ <span class="command">Payload delivered to ${form.email.value}</span></p>`;
+                    status.textContent = 'Message sent successfully! Check your inbox.';
+                    status.style.color = '#00ff00';
+                    form.reset();
+                    setTimeout(() => status.textContent = '', 5000);
+                } else {
+                    throw new Error('Transmission failed');
+                }
+            })
+            .catch(error => {
+                clearInterval(spinInterval);
+                submitBtn.textContent = 'Execute (-s)';
+                submitBtn.disabled = false;
+                status.textContent = 'Error: Transmission failed. Retry or escalate.';
+                status.style.color = '#ff0000';
+                setTimeout(() => status.textContent = '', 5000);
+            });
+        });
 
-            window.location.href = mailtoLink;
-
-            status.textContent = 'Message sent! Check your email client to confirm.';
-            status.style.color = '#00ff00';
-            setTimeout(() => {
-                status.textContent = '';
-                document.getElementById('contact-form').reset();
-            }, 3000);
-        }
+        // Easter egg: Hidden command
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'w' && event.ctrlKey) {
+                terminalBuffer.innerHTML += `<p>kali@kali:~$ <span class="command">whoami</span><br>kali@kali:~$ <span class="command">Identity: EliteHacker1337</span></p>`;
+                terminalBuffer.scrollTop = terminalBuffer.scrollHeight;
+            }
+        });
 
         // Ensure expandable images work (if any)
         document.querySelectorAll('.expandable').forEach(img => {
