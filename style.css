@@ -229,18 +229,20 @@ main {
     border: 1px solid #00ff00;
     box-shadow: 0 0 5px #00ff00;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
     object-fit: contain;
 }
 
 .cert-images img.expanded {
-    width: 100%;
-    max-width: 800px;
-    z-index: 1000;
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(1.2);
+    transform: translate(-50%, -50%);
+    width: auto;
+    max-width: 90vw;
+    max-height: 90vh;
+    z-index: 1000;
+    box-shadow: 0 0 15px #00ff00;
 }
 
 .cert-images div {
@@ -342,7 +344,8 @@ footer {
         width: 150px;
     }
     .cert-images img.expanded {
-        max-width: 300px;
+        max-width: 80vw;
+        max-height: 80vh;
     }
     footer {
         padding: 0.5rem;
