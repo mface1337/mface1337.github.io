@@ -402,3 +402,24 @@ footer {
         animation: fall calc(5s + 0.1s * var(--i)) linear infinite;
     }
 }
+/* Matrix Rain Spans */
+.matrix-span-1 { --i: 1; }
+.matrix-span-2 { --i: 2; }
+.matrix-span-3 { --i: 3; }
+.matrix-span-4 { --i: 4; }
+.matrix-span-5 { --i: 5; }
+.matrix-span-6 { --i: 6; }
+.matrix-span-7 { --i: 7; }
+.matrix-span-8 { --i: 8; }
+.matrix-span-9 { --i: 9; }
+.matrix-span-10 { --i: 10; }
+.matrix-span-11 { --i: 11; }
+.matrix-span-12 { --i: 12; }
+.matrix-span-13 { --i: 13; }
+.matrix-span-14 { --i: 14; }
+.matrix-span-15 { --i: 15; }
+.matrix-span-16 { --i: 16; }
+.matrix-span-17 { --i: 17; }
+.matrix-span-18 { --i: 18; }
+.matrix-span-19 { --i: 19; }
+.matrix-span-20 { --i: 20; }
