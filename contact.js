@@ -4,11 +4,14 @@ document.getElementById('email-display').textContent = 'mecktech@gmail.com';
 const terminalBuffer = document.getElementById('terminal-buffer');
 const terminalInput = document.getElementById('terminal-input');
 const kaliTerminal = document.getElementById('kali-terminal');
+const promptElement = document.querySelector('.prompt'); // Select the prompt span
 let step = 1; // 1: email, 2: message, 3: confirm
 let userEmail = '';
 let userMessage = '';
 let lastSubmissionTime = 0; // Initialize to 0 for first submission
 const RATE_LIMIT_MS = 30000; // 30 seconds
+let isRoot = false; // Track if user has escalated to root
+let expectingPassword = false; // Track if waiting for sudo password
 
 // Sanitization and validation functions
 function sanitizeInput(input) {
@@ -30,24 +33,44 @@ function appendToBuffer(text) {
     kaliTerminal.scrollTop = kaliTerminal.scrollHeight;
 }
 
+function updatePrompt() {
+    const username = isRoot ? 'root@kali' : 'kali@kali';
+    promptElement.textContent = `${username}:~$ `;
+}
+
 function clearTerminal() {
     while (terminalBuffer.firstChild) {
         terminalBuffer.removeChild(terminalBuffer.firstChild);
     }
-    appendToBuffer('kali@kali:~$ Enter your email >');
+    isRoot = false; // Reset root status
+    expectingPassword = false; // Reset password expectation
+    updatePrompt(); // Reset prompt to kali@kali
+    appendToBuffer(`${promptElement.textContent} Enter your email >`);
     step = 1;
     userEmail = '';
     userMessage = '';
 }
 
-terminalInput.addEventListener('keydown', (event) => {
+// Fetch user's IP address using ipify.org API
+async function getIPAddress() {
+    try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        return data.ip;
+    } catch (error) {
+        console.error('Error fetching IP address:', error);
+        return 'Unable to retrieve IP address';
+    }
+}
+
+terminalInput.addEventListener('keydown', async (event) => {
     if (event.key === 'Enter') {
         const inputValue = terminalInput.value.trim();
         if (inputValue === '') return;
 
         const sanitizedInput = sanitizeInput(inputValue);
         if (sanitizedInput.length > 500) {
-            appendToBuffer('kali@kali:~$ Error: Input too long (max 500 characters).');
+            appendToBuffer(`${promptElement.textContent} Error: Input too long (max 500 characters).`);
             terminalInput.value = '';
             return;
         }
@@ -56,47 +79,121 @@ terminalInput.addEventListener('keydown', (event) => {
         if (sanitizedInput.toLowerCase() === 'clear') {
             clearTerminal();
             terminalInput.value = '';
-            return; // Exit the event listener to prevent further processing
+            return;
         }
 
-        // Check for Easter egg: 'whoami' command
-        if (sanitizedInput.toLowerCase() === 'whoami') {
-            appendToBuffer('kali@kali:~$ whoami');
-            appendToBuffer('kali@kali:~$ Identity: EliteHacker1337');
-            appendToBuffer('kali@kali:~$ Enter your email >');
-            step = 1; // Reset to initial state
+        // Check for sudo su password prompt
+        if (expectingPassword) {
+            appendToBuffer(`[sudo] password for kali: ${sanitizedInput}`);
+            if (sanitizedInput.toLowerCase() === 'kali') {
+                isRoot = true;
+                updatePrompt();
+                appendToBuffer(`${promptElement.textContent} Enter your email >`);
+                step = 1;
+            } else {
+                appendToBuffer(`${promptElement.textContent} Sorry, try again.`);
+                appendToBuffer(`${promptElement.textContent} Enter your email >`);
+                step = 1;
+            }
+            expectingPassword = false;
             terminalInput.value = '';
-            return; // Exit the event listener to prevent form processing
+            return;
+        }
+
+        // Check for Easter eggs
+        const command = sanitizedInput.toLowerCase();
+        if (command === 'whoami') {
+            appendToBuffer(`${promptElement.textContent} whoami`);
+            appendToBuffer(`${promptElement.textContent} Identity: EliteHacker1337`);
+            appendToBuffer(`${promptElement.textContent} Enter your email >`);
+            step = 1;
+            terminalInput.value = '';
+            return;
+        }
+
+        if (command === 'sudo su') {
+            appendToBuffer(`${promptElement.textContent} sudo su`);
+            appendToBuffer('[sudo] password for kali:');
+            expectingPassword = true;
+            terminalInput.value = '';
+            return;
+        }
+
+        if (command === 'iwconfig' || command === 'ifconfig') {
+            appendToBuffer(`${promptElement.textContent} ${command}`);
+            const ipAddress = await getIPAddress();
+            appendToBuffer(`${promptElement.textContent} eth0: inet ${ipAddress}  netmask 255.255.255.0`);
+            appendToBuffer(`${promptElement.textContent} Enter your email >`);
+            step = 1;
+            terminalInput.value = '';
+            return;
+        }
+
+        if (command === 'nmap') {
+            appendToBuffer(`${promptElement.textContent} nmap`);
+            appendToBuffer(`${promptElement.textContent} Starting Nmap 7.91 ( https://nmap.org )`);
+            appendToBuffer(`${promptElement.textContent} Nmap scan report for localhost (127.0.0.1)`);
+            appendToBuffer(`${promptElement.textContent} PORT   STATE SERVICE`);
+            appendToBuffer(`${promptElement.textContent} 22/tcp open  ssh`);
+            appendToBuffer(`${promptElement.textContent} 80/tcp open  http`);
+            appendToBuffer(`${promptElement.textContent} Nmap done: 1 IP address (1 host up)`);
+            appendToBuffer(`${promptElement.textContent} Enter your email >`);
+            step = 1;
+            terminalInput.value = '';
+            return;
+        }
+
+        if (command === 'metasploit') {
+            appendToBuffer(`${promptElement.textContent} metasploit`);
+            appendToBuffer(`${promptElement.textContent} [*] Starting the Metasploit Framework console...`);
+            appendToBuffer(`${promptElement.textContent} =[ metasploit v6.0.1-dev ]`);
+            appendToBuffer(`${promptElement.textContent} + -- --=[ 2000 exploits - 1100 auxiliary - 350 post ]`);
+            appendToBuffer(`${promptElement.textContent} msf6 > Ready to exploit! (Not really, this is a demo)`);
+            appendToBuffer(`${promptElement.textContent} Enter your email >`);
+            step = 1;
+            terminalInput.value = '';
+            return;
+        }
+
+        if (command === 'aircrack-ng') {
+            appendToBuffer(`${promptElement.textContent} aircrack-ng`);
+            appendToBuffer(`${promptElement.textContent} Aircrack-ng 1.6`);
+            appendToBuffer(`${promptElement.textContent} [00:00:01] Captured 1337 packets`);
+            appendToBuffer(`${promptElement.textContent} Cracking WPA2 key... (Just kidding!)`);
+            appendToBuffer(`${promptElement.textContent} Enter your email >`);
+            step = 1;
+            terminalInput.value = '';
+            return;
         }
 
         // Proceed with email submission form logic
         if (step === 1) {
             // Step 1: Collect email
             if (!validateEmail(sanitizedInput)) {
-                appendToBuffer('kali@kali:~$ Error: Invalid email format.');
-                appendToBuffer('kali@kali:~$ Enter your email >');
+                appendToBuffer(`${promptElement.textContent} Error: Invalid email format.`);
+                appendToBuffer(`${promptElement.textContent} Enter your email >`);
                 terminalInput.value = '';
                 return;
             }
             userEmail = sanitizedInput;
-            appendToBuffer(`kali@kali:~$ Enter your email > ${userEmail}`);
-            appendToBuffer('kali@kali:~$ Enter your message >');
+            appendToBuffer(`${promptElement.textContent} Enter your email > ${userEmail}`);
+            appendToBuffer(`${promptElement.textContent} Enter your message >`);
             step = 2;
         } else if (step === 2) {
             // Step 2: Collect message
             userMessage = sanitizedInput;
-            appendToBuffer(`kali@kali:~$ Enter your message > ${userMessage}`);
-            appendToBuffer('kali@kali:~$ Send message? [y/n] >');
+            appendToBuffer(`${promptElement.textContent} Enter your message > ${userMessage}`);
+            appendToBuffer(`${promptElement.textContent} Send message? [y/n] >`);
             step = 3;
         } else if (step === 3) {
             // Step 3: Confirm and send
-            appendToBuffer(`kali@kali:~$ Send message? [y/n] > ${sanitizedInput}`);
+            appendToBuffer(`${promptElement.textContent} Send message? [y/n] > ${sanitizedInput}`);
             if (sanitizedInput.toLowerCase() === 'y') {
-                appendToBuffer('kali@kali:~$ Sending encrypted payload...');
+                appendToBuffer(`${promptElement.textContent} Sending encrypted payload...`);
                 sendEmail();
             } else {
-                appendToBuffer('kali@kali:~$ Transmission aborted.');
-                appendToBuffer('kali@kali:~$ Enter your email >');
+                appendToBuffer(`${promptElement.textContent} Transmission aborted.`);
+                appendToBuffer(`${promptElement.textContent} Enter your email >`);
                 step = 1;
             }
         }
@@ -108,8 +205,8 @@ function sendEmail() {
     const now = Date.now();
     if (now - lastSubmissionTime < RATE_LIMIT_MS) {
         const remainingSeconds = Math.ceil((RATE_LIMIT_MS - (now - lastSubmissionTime)) / 1000);
-        appendToBuffer(`kali@kali:~$ Error: Rate limit exceeded. Try again in ${remainingSeconds} seconds.`);
-        appendToBuffer('kali@kali:~$ Enter your email >');
+        appendToBuffer(`${promptElement.textContent} Error: Rate limit exceeded. Try again in ${remainingSeconds} seconds.`);
+        appendToBuffer(`${promptElement.textContent} Enter your email >`);
         step = 1;
         return;
     }
@@ -129,19 +226,19 @@ function sendEmail() {
     .then(response => {
         if (response.ok) {
             lastSubmissionTime = now; // Update last submission time
-            appendToBuffer('kali@kali:~$ Payload delivered successfully!');
-            appendToBuffer('kali@kali:~$ Enter your email >');
+            appendToBuffer(`${promptElement.textContent} Payload delivered successfully!`);
+            appendToBuffer(`${promptElement.textContent} Enter your email >`);
             step = 1;
         } else {
-            appendToBuffer('kali@kali:~$ Error: Transmission failed. Status: ' + response.status);
-            appendToBuffer('kali@kali:~$ Enter your email >');
+            appendToBuffer(`${promptElement.textContent} Error: Transmission failed. Status: ${response.status}`);
+            appendToBuffer(`${promptElement.textContent} Enter your email >`);
             step = 1;
             console.error('Formspree Response:', response.status, response.statusText);
         }
     })
     .catch(error => {
-        appendToBuffer(`kali@kali:~$ Error: ${error.message}`);
-        appendToBuffer('kali@kali:~$ Enter your email >');
+        appendToBuffer(`${promptElement.textContent} Error: ${error.message}`);
+        appendToBuffer(`${promptElement.textContent} Enter your email >`);
         step = 1;
         console.error('Formspree Error:', error);
     });
