@@ -147,6 +147,99 @@ main {
 @keyframes fadeInText {
     to { opacity: 1; }
 }
+/* Terminal Window */
+.terminal-window {
+    background-color: rgba(0, 0, 0, 0.9);
+    border: 2px solid #00ff00;
+    margin: 2rem auto;
+    max-width: 900px;
+    padding: 1rem;
+    position: relative;
+    box-shadow: inset 0 0 10px #00ff00;
+}
+
+/* Terminal Content */
+.terminal-content {
+    padding: 1rem;
+    text-align: center; /* Centers all text and inline content */
+}
+
+/* Section Styling */
+.about-section, .work-experience-section, .education-section, .skills-section {
+    margin-bottom: 2rem; /* Spacing between sections */
+}
+
+/* Profile Photo */
+.profile-photo {
+    display: block;
+    margin: 0 auto 1rem auto; /* Centered with bottom spacing */
+    width: 200px;
+    height: auto;
+    max-width: 100%;
+    border: 2px solid #00ff00;
+    box-shadow: 0 0 10px #00ff00;
+}
+
+/* Lists */
+.terminal-content ul {
+    list-style-type: none;
+    padding: 0; /* Remove default padding */
+    text-align: left; /* Left-align list items for readability */
+    max-width: 700px; /* Constrain width */
+    margin: 0 auto; /* Center the list block */
+}
+.terminal-content ul li {
+    margin-bottom: 1.5rem; /* Space between list items */
+}
+.terminal-content ul li::before {
+    content: '> ';
+    color: #00ff00;
+}
+
+/* Education Container */
+.education-container {
+    margin: 0 auto;
+    max-width: 800px;
+}
+.cert-images {
+    display: flex;
+    justify-content: center; /* Center images horizontally */
+    flex-wrap: wrap;
+    padding: 1rem 0;
+}
+.cert-images img {
+    width: 250px; /* Fixed small size */
+    height: auto;
+    margin: 0.5rem; /* Spacing between images */
+    border: 1px solid #00ff00;
+    box-shadow: 0 0 5px #00ff00;
+    cursor: pointer; /* Indicate clickability */
+    transition: transform 0.3s ease; /* Smooth expansion */
+}
+.cert-images img.expanded {
+    width: 100%; /* Full size when clicked */
+    max-width: 800px; /* Cap expansion */
+    z-index: 1000; /* Bring to front */
+    transform: scale(1.2); /* Slight zoom for effect */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+    .terminal-window {
+        margin: 1rem 0.5rem;
+        padding: 0.5rem;
+    }
+    .profile-photo {
+        width: 150px;
+    }
+    .cert-images img {
+        width: 150px;
+    }
+    .cert-images img.expanded {
+        width: 100%;
+        max-width: 300px;
+    }
+}
 
 /* Terminal window styling */
 .terminal-window {
