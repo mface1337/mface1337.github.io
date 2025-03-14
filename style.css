@@ -147,149 +147,8 @@ main {
 @keyframes fadeInText {
     to { opacity: 1; }
 }
+
 /* Terminal Window */
-.terminal-window {
-    background-color: rgba(0, 0, 0, 0.9);
-    border: 2px solid #00ff00;
-    margin: 2rem auto;
-    max-width: 900px;
-    padding: 1rem;
-    position: relative;
-    box-shadow: inset 0 0 10px #00ff00;
-}
-
-/* Terminal Content */
-.terminal-content {
-    padding: 1rem;
-    text-align: center;
-}
-/* Education Container */
-.education-container {
-    margin: 0 auto;
-    max-width: 800px;
-}
-/* Cert Images */
-.cert-images {
-    display: flex;
-    justify-content: center; /* Ensures centering */
-    align-items: center; /* Vertically aligns items */
-    flex-wrap: wrap; /* Allows wrapping on small screens */
-    padding: 1rem 0;
-    width: 100%; /* Ensures full width of container */
-}
-.cert-images img {
-    width: 250px; /* Fixed small size */
-    height: auto;
-    margin: 0.5rem; /* Consistent spacing */
-    border: 1px solid #00ff00;
-    box-shadow: 0 0 5px #00ff00;
-    cursor: pointer; /* Indicate clickability */
-    transition: transform 0.3s ease; /* Smooth expansion */
-    object-fit: cover; /* Ensures proper scaling */
-}
-.cert-images img.expanded {
-    width: 100%; /* Full size when clicked */
-    max-width: 800px; /* Cap expansion */
-    z-index: 1000; /* Bring to front */
-    transform: scale(1.2); /* Slight zoom */
-    position: fixed; /* Overlay effect */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Center in viewport */
-}
-.cert-images div { /* For Credly iframe */
-    margin: 0 auto;
-    display: block;
-    text-align: center; /* Center the iframe */
-}
-
-/* Section Styling */
-.about-section, .work-experience-section, .education-section, .skills-section {
-    margin-bottom: 2rem; /* Spacing between sections */
-}
-
-/* Profile Photo */
-.profile-photo {
-    display: block;
-    margin: 0 auto 1rem auto; /* Centered with bottom spacing */
-    width: 200px;
-    height: auto;
-    max-width: 100%;
-    border: 2px solid #00ff00;
-    box-shadow: 0 0 10px #00ff00;
-}
-
-/* Lists */
-.terminal-content ul {
-    list-style-type: none;
-    padding: 0; /* Remove default padding */
-    text-align: left; /* Left-align list items for readability */
-    max-width: 700px; /* Constrain width */
-    margin: 0 auto; /* Center the list block */
-}
-.terminal-content ul li {
-    margin-bottom: 1.5rem; /* Space between list items */
-}
-.terminal-content ul li::before {
-    content: '> ';
-    color: #00ff00;
-}
-
-/* Education Container */
-.education-container {
-    margin: 0 auto;
-    max-width: 800px;
-}
-.cert-images {
-    display: flex;
-    justify-content: center; /* Center images horizontally */
-    flex-wrap: wrap;
-    padding: 1rem 0;
-}
-.cert-images img {
-    width: 250px; /* Fixed small size */
-    height: auto;
-    margin: 0.5rem; /* Spacing between images */
-    border: 1px solid #00ff00;
-    box-shadow: 0 0 5px #00ff00;
-    cursor: pointer; /* Indicate clickability */
-    transition: transform 0.3s ease; /* Smooth expansion */
-}
-.cert-images img.expanded {
-    width: 100%; /* Full size when clicked */
-    max-width: 800px; /* Cap expansion */
-    z-index: 1000; /* Bring to front */
-    transform: scale(1.2); /* Slight zoom for effect */
-}
-
-/* Responsive Adjustments */
-@media (max-width: 600px) {
-    .terminal-window {
-        margin: 1rem 0.5rem;
-        padding: 0.5rem;
-    }
-    .profile-photo {
-        width: 150px;
-    }
-    .cert-images img {
-        width: 150px;
-    }
-    .cert-images img.expanded {
-        width: 100%;
-        max-width: 300px;
-    }
-}
-/* Responsive Adjustments */
-@media (max-width: 600px) {
-    .cert-images img {
-        width: 150px; /* Smaller for mobile */
-    }
-    .cert-images img.expanded {
-        max-width: 300px; /* Smaller cap on mobile */
-    }
-}
-
-/* Terminal window styling */
 .terminal-window {
     background-color: rgba(0, 0, 0, 0.9);
     border: 2px solid #00ff00;
@@ -329,6 +188,7 @@ main {
     width: 100%;
 }
 
+/* Terminal Content */
 .terminal-content {
     padding: 1rem;
     text-align: center;
@@ -344,37 +204,88 @@ main {
 .terminal-content p {
     margin-bottom: 1rem;
 }
-.terminal-content img {
-    display: block;
+
+/* Education Container */
+.education-container {
     margin: 0 auto;
-    max-width: 100%;
-    width: 300px;
+    max-width: 800px;
+    text-align: center;
+}
+
+/* Cert Images */
+.cert-images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 1rem 0;
+    width: 100%;
+    gap: 1rem;
+}
+
+.cert-images img {
+    width: 250px;
     height: auto;
+    border: 1px solid #00ff00;
+    box-shadow: 0 0 5px #00ff00;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    object-fit: contain;
 }
-.terminal-content div {
+
+.cert-images img.expanded {
+    width: 100%;
+    max-width: 800px;
+    z-index: 1000;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+.cert-images div {
     margin: 0 auto;
     display: block;
 }
 
-ul {
-    list-style-type: none;
-    padding-left: 1rem;
-}
-
-ul li::before {
-    content: '> ';
-    color: #00ff00;
+/* Section Styling */
+.about-section, .work-experience-section, .education-section, .skills-section {
+    margin-bottom: 2rem;
 }
 
 /* Profile Photo */
 .profile-photo {
     display: block;
-    margin: 1rem auto;
+    margin: 0 auto 1rem auto;
+    width: 200px;
+    height: auto;
+    max-width: 100%;
     border: 2px solid #00ff00;
     box-shadow: 0 0 10px #00ff00;
-    max-width: 100%;
-    width: 200px; /* Adjust as needed */
-    height: auto;
+}
+
+/* Lists */
+.terminal-content ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.terminal-content ul li {
+    margin-bottom: 1.5rem;
+}
+
+.terminal-content ul li::before {
+    content: '> ';
+    color: #00ff00;
+}
+
+/* Improve text readability */
+.terminal-content p, .terminal-content ul {
+    line-height: 1.8;
+    padding: 0 0.5rem;
 }
 
 /* Links */
@@ -399,7 +310,7 @@ footer {
     box-shadow: 0 0 10px #00ff00;
 }
 
-/* Responsive design */
+/* Responsive Adjustments */
 @media (max-width: 600px) {
     nav {
         flex-direction: column;
@@ -416,26 +327,6 @@ footer {
     main {
         padding-top: 8rem;
     }
-}
-
-/* Ensure images stay responsive */
-.cert-images img {
-    width: 150px;
-    height: auto;
-    margin: 10px;
-    border: 1px solid #00ff00;
-    box-shadow: 0 0 5px #00ff00;
-    max-width: 100%; /* Prevents overflow */
-}
-
-/* Improve text readability */
-.terminal-content p, .terminal-content ul {
-    line-height: 1.8;
-    padding: 0 0.5rem;
-}
-
-/* Tighter mobile breakpoint */
-@media (max-width: 600px) {
     .terminal-window {
         max-width: 100%;
         margin: 1rem 0.5rem;
@@ -448,8 +339,10 @@ footer {
         font-size: 0.9rem;
     }
     .cert-images img {
-        width: 80px;
-        margin: 5px;
+        width: 150px;
+    }
+    .cert-images img.expanded {
+        max-width: 300px;
     }
     footer {
         padding: 0.5rem;
