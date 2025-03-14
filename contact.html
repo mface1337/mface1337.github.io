@@ -152,7 +152,8 @@
         function sendEmail() {
             const now = Date.now();
             if (now - lastSubmissionTime < RATE_LIMIT_MS) {
-                appendToBuffer(`kali@kali:~$ Error: Rate limit exceeded. Try again in ${Math.ceil((RATE_LIMIT_MS - (now - lastSubmissionTime)) / 1000)} seconds.`);
+                const remainingSeconds = Math.ceil((RATE_LIMIT_MS - (now - lastSubmissionTime)) / 1000);
+                appendToBuffer(`kali@kali:~$ Error: Rate limit exceeded. Try again in ${remainingSeconds} seconds.`);
                 appendToBuffer('kali@kali:~$ Enter your email >');
                 step = 1;
                 return;
@@ -172,7 +173,7 @@
             })
             .then(response => {
                 if (response.ok) {
-                    lastSubmissionTime = Date.now();
+                    lastSubmissionTime = Date.now(); // Update last submission time
                     appendToBuffer('kali@kali:~$ Payload delivered successfully!');
                     appendToBuffer('kali@kali:~$ Enter your email >');
                     step = 1;
