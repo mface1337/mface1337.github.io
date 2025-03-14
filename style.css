@@ -95,7 +95,7 @@ nav a:hover {
 
 /* Main content */
 main {
-    padding-top: 7rem;
+    padding-top: 7rem; /* Default for desktop */
 }
 
 /* Hero section - Full-screen CLI boot sequence */
@@ -314,11 +314,11 @@ footer {
 
 /* Responsive Adjustments */
 @media (max-width: 600px) {
-    :root {
-        --header-height: 12rem; /* Adjust as needed */
+    nav {
+        flex-direction: column;
+        text-align: center;
+        padding-bottom: 0.5rem;
     }
-    /* ... other mobile rules ... */
-}
     nav .prompt {
         margin-bottom: 0.5rem;
     }
@@ -327,7 +327,7 @@ footer {
         margin: 0.3rem 0;
     }
     main {
-        padding-top: 8rem;
+        padding-top: 10rem; /* Increased to clear stacked nav on mobile */
     }
     .terminal-window {
         max-width: 100%;
