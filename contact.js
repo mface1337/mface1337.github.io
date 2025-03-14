@@ -42,6 +42,17 @@ terminalInput.addEventListener('keydown', (event) => {
             return;
         }
 
+        // Check for Easter egg: 'whoami' command
+        if (sanitizedInput.toLowerCase() === 'whoami') {
+            appendToBuffer('kali@kali:~$ whoami');
+            appendToBuffer('kali@kali:~$ Identity: EliteHacker1337');
+            appendToBuffer('kali@kali:~$ Enter your email >');
+            step = 1; // Reset to initial state
+            terminalInput.value = '';
+            return; // Exit the event listener to prevent form processing
+        }
+
+        // Proceed with email submission form logic
         if (step === 1) {
             // Step 1: Collect email
             if (!validateEmail(sanitizedInput)) {
@@ -118,14 +129,6 @@ function sendEmail() {
         console.error('Formspree Error:', error);
     });
 }
-
-// Easter egg: Hidden command
-document.addEventListener('keydown', (event) => {
-    if (event.key === 'w' && event.ctrlKey) {
-        appendToBuffer('kali@kali:~$ whoami');
-        appendToBuffer('kali@kali:~$ Identity: EliteHacker1337');
-    }
-});
 
 // Ensure expandable images work (if any)
 document.querySelectorAll('.expandable').forEach(img => {
