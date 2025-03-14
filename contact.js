@@ -51,15 +51,19 @@ function clearTerminal() {
     userMessage = '';
 }
 
-// Fetch user's IP address using ipify.org API
+// Fetch user's IP address using geo.ipify.org API with API key
 async function getIPAddress() {
     try {
-        const response = await fetch('https://api.ipify.org?format=json');
+        const apiKey = 'at_Mu5GGmXo9PuV4x6J0dohJUr2TP10X'; // Your API key
+        const response = await fetch(`https://geo.ipify.org/api/v2/country?apiKey=${apiKey}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
-        return data.ip;
+        return data.ip || 'No IP available'; // Extract IP from response
     } catch (error) {
         console.error('Error fetching IP address:', error);
-        return 'Unable to retrieve IP address';
+        return 'Unable to retrieve IP address'; // Fallback message
     }
 }
 
