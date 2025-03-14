@@ -50,9 +50,51 @@
                 </ul>
             </div>
         </div>
+        <div class="terminal-window">
+            <div class="title-bar">Send a Message</div>
+            <div class="terminal-content">
+                <p>$ kali@terminal:~$ <span class="prompt">type message &gt;</span></p>
+                <form id="contact-form" class="terminal-form" onsubmit="sendEmail(event)">
+                    <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    <textarea id="message" name="message" placeholder="Your Message" rows="4" required></textarea>
+                    <button type="submit">Send</button>
+                </form>
+                <p id="form-status" class="status-message"></p>
+            </div>
+        </div>
     </main>
     <footer>
         <p>© 2023 Chris Meck. All rights reserved.</p>
     </footer>
+    <script>
+        function sendEmail(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            const status = document.getElementById('form-status');
+
+            const subject = encodeURIComponent(`Message from ${name}`);
+            const body = encodeURIComponent(`From: ${email}\n\n${message}`);
+            const mailtoLink = `mailto:mecktech@gmail.com?subject=${subject}&body=${body}`;
+
+            window.location.href = mailtoLink;
+
+            status.textContent = 'Message sent! Check your email client to confirm.';
+            status.style.color = '#00ff00';
+            setTimeout(() => {
+                status.textContent = '';
+                document.getElementById('contact-form').reset();
+            }, 3000);
+        }
+
+        // Ensure expandable images work (if any)
+        document.querySelectorAll('.expandable').forEach(img => {
+            img.addEventListener('click', () => {
+                img.classList.toggle('expanded');
+            });
+        });
+    </script>
 </body>
 </html>
