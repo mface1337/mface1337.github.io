@@ -30,6 +30,16 @@ function appendToBuffer(text) {
     kaliTerminal.scrollTop = kaliTerminal.scrollHeight;
 }
 
+function clearTerminal() {
+    while (terminalBuffer.firstChild) {
+        terminalBuffer.removeChild(terminalBuffer.firstChild);
+    }
+    appendToBuffer('kali@kali:~$ Enter your email >');
+    step = 1;
+    userEmail = '';
+    userMessage = '';
+}
+
 terminalInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
         const inputValue = terminalInput.value.trim();
@@ -40,6 +50,13 @@ terminalInput.addEventListener('keydown', (event) => {
             appendToBuffer('kali@kali:~$ Error: Input too long (max 500 characters).');
             terminalInput.value = '';
             return;
+        }
+
+        // Check for clear command
+        if (sanitizedInput.toLowerCase() === 'clear') {
+            clearTerminal();
+            terminalInput.value = '';
+            return; // Exit the event listener to prevent further processing
         }
 
         // Check for Easter egg: 'whoami' command
