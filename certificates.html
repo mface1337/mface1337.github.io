@@ -40,29 +40,42 @@
         </nav>
     </header>
     <main>
-    <div class="terminal-window">
-        <div class="title-bar">Certificate: Google Cybersecurity Professional Certification</div>
-        <div class="terminal-content">
-            <p><strong>Issuer:</strong> Google via Coursera | <strong>Date:</strong> [August 2023]</p>
-            <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="3e110568-71b4-4261-b36e-260b304752ad" data-share-badge-host="https://www.credly.com"></div>
-            <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+        <div class="terminal-window">
+            <div class="title-bar">Certificate: Google Cybersecurity Professional Certification</div>
+            <div class="terminal-content">
+                <p><strong>Issuer:</strong> Google via Coursera | <strong>Date:</strong> [August 2023]</p>
+                <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="3e110568-71b4-4261-b36e-260b304752ad" data-share-badge-host="https://www.credly.com"></div>
+                <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+            </div>
         </div>
-    </div>
-    <div class="terminal-window">
-        <div class="title-bar">Certificate: TryHackMe Jr. Penetration Testing Path</div>
-        <div class="terminal-content">
-            <p><strong>Issuer:</strong> TryHackMe | <strong>Date:</strong> [September 2024]</p>
-            <img src="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-POB4MDAC1F.png" alt="Jr Penetration Tester">
+        <div class="terminal-window">
+            <div class="title-bar">Certificate: TryHackMe Jr. Penetration Testing Path</div>
+            <div class="terminal-content">
+                <p><strong>Issuer:</strong> TryHackMe | <strong>Date:</strong> [September 2024]</p>
+                <div class="cert-images">
+                    <img src="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-POB4MDAC1F.png" alt="Jr Penetration Tester" class="expandable">
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="terminal-window">
-        <div class="title-bar">Certificate: TryHackMe Web Fundamentals<br>A pathway to web application security</div>
-        <div class="terminal-content">
-            <p><strong>Issuer:</strong> TryHackMe | <strong>Date:</strong> [November 2024]</p>
-            <img src="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-FZNC5Z8U6X.png" alt="Web Fundamentals">
+        <div class="terminal-window">
+            <div class="title-bar">Certificate: TryHackMe Web Fundamentals<br>A pathway to web application security</div>
+            <div class="terminal-content">
+                <p><strong>Issuer:</strong> TryHackMe | <strong>Date:</strong> [November 2024]</p>
+                <div class="cert-images">
+                    <img src="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-FZNC5Z8U6X.png" alt="Web Fundamentals" class="expandable">
+                </div>
+            </div>
         </div>
-    </div>
-</main>
-<footer>
-    <p>© 2023 Chris Meck. All rights reserved.</p>
-</footer>
+    </main>
+    <footer>
+        <p>© 2023 Chris Meck. All rights reserved.</p>
+    </footer>
+    <script>
+        document.querySelectorAll('.expandable').forEach(img => {
+            img.addEventListener('click', () => {
+                img.classList.toggle('expanded');
+            });
+        });
+    </script>
+</body>
+</html>

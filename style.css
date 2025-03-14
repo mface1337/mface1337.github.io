@@ -212,7 +212,7 @@ main {
     text-align: center;
 }
 
-/* Cert Images */
+/* Cert Images (Unified for About and Certificates pages) */
 .cert-images {
     display: flex;
     justify-content: center;
@@ -224,7 +224,7 @@ main {
 }
 
 .cert-images img {
-    width: 250px;
+    width: 250px; /* Normal size to fit page borders */
     height: auto;
     border: 1px solid #00ff00;
     box-shadow: 0 0 5px #00ff00;
@@ -327,7 +327,7 @@ footer {
         margin: 0.3rem 0;
     }
     main {
-        padding-top: 10rem; /* Increased to clear stacked nav on mobile */
+        padding-top: 14rem; /* Increased to 224px to clear stacked nav on mobile */
     }
     .terminal-window {
         max-width: 100%;
@@ -341,7 +341,7 @@ footer {
         font-size: 0.9rem;
     }
     .cert-images img {
-        width: 150px;
+        width: 150px; /* Adjusted for mobile */
     }
     .cert-images img.expanded {
         max-width: 80vw;
